@@ -6,6 +6,13 @@ from langchain.embeddings import HuggingFaceEmbeddings
 
 from  utils import pdf_doccument_loader, create_vector_store
 
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = os.path.join(ROOT_DIR, "data")
+INDEX_DIR = "faiss_index"
+
+
 
 def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=500, chunk_overlap=100):
 
@@ -37,7 +44,7 @@ def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=500, chunk_overl
         print(f"Vector store saved to: {index_dir}")
 
 
-create_vectorstore_from_pdfs("/doc-chat/data", "faiss_index")
+create_vectorstore_from_pdfs(str(DATA_DIR), INDEX_DIR)
 
 
 

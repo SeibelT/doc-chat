@@ -1,8 +1,13 @@
+import os
 from langchain_community.vectorstores import FAISS
 from utils import embedding_model
+from pathlib import Path
 
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = os.path.join(ROOT_DIR, "data")
+INDEX_DIR = os.path.join(ROOT_DIR, "Backend/rag/faiss_index")
 
-def retrieve_context_from_vector_database(input_query, folder_path, index_dir, score_threshold_limit=0.3):
+def retrieve_context_from_vector_database(input_query,  index_dir, folder_path,score_threshold_limit=0.3):
 
     embed_model = embedding_model()
 
@@ -20,10 +25,10 @@ def retrieve_context_from_vector_database(input_query, folder_path, index_dir, s
     print(f"retrievede")
 
 
-input_query = "what are the main drugs used?"
-index_dir = "index"
-folder_path = "/doc-chat/Backend/rag/faiss_index"
-retrieve_context_from_vector_database(input_query, folder_path, index_dir)
+
+input_query = "What long i have to wait after the procedure to eat?"
+index_name = "index"
+retrieve_context_from_vector_database(input_query, index_name, folder_path=INDEX_DIR)
 
 
 
