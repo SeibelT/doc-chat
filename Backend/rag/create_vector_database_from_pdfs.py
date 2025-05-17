@@ -37,7 +37,7 @@ def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=500, chunk_overl
         print(f"Vector store saved to: {index_dir}")
 
 
-create_vectorstore_from_pdfs("/Users/NithishChowdary1/Desktop/Workspace/Innovate-a-thon/doc-chat/data", "faiss_index")
+create_vectorstore_from_pdfs("/doc-chat/data", "faiss_index")
 
 
 

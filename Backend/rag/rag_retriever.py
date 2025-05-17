@@ -22,7 +22,7 @@ def retrieve_context_from_vector_database(input_query, folder_path, index_dir, s
 
 input_query = "what are the main drugs used?"
 index_dir = "index"
-folder_path = "/Users/NithishChowdary1/Desktop/Workspace/Innovate-a-thon/doc-chat/rag/faiss_index"
+folder_path = "/doc-chat/Backend/rag/faiss_index"
 retrieve_context_from_vector_database(input_query, folder_path, index_dir)
 
 
