@@ -6,6 +6,7 @@ from langchain_community.document_loaders import PDFPlumberLoader
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
+from transformers import pipeline
 
 
 def pdf_doccument_loader(pdf_dir, file):
@@ -43,7 +44,17 @@ def embedding_model(model_name="BAAI/bge-large-en-v1.5"):
     return HuggingFaceEmbeddings(model_name=model_name)
 
 
+def reranking_model(model_name="BAAI/bge-reranker-large", top_k=5):
 
+    # Initialize the bge-reranker-large model once
+    reranker = pipeline(
+        "text-classification",
+        model=model_name,
+        top_k=top_k,
+        device=0  # Set to 0 if using CUDA (GPU)
+    )
+
+    return  reranker
 
 
 
