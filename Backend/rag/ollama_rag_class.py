@@ -11,10 +11,15 @@ from langchain.schema import StrOutputParser
 from langchain.memory import ChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage
 import random
-
+from langchain.embeddings import HuggingFaceEmbeddings
 # Import from your existing scripts
-from utils import embedding_model
+#from utils import embedding_model
 from langchain_community.vectorstores import FAISS
+
+
+def embedding_model(model_name="BAAI/bge-large-en-v1.5"):
+
+    return HuggingFaceEmbeddings(model_name=model_name)
 
 
 class Ollama_RAG:
