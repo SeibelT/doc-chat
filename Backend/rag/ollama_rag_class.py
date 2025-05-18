@@ -91,6 +91,47 @@ class Ollama_RAG:
         
         print("Initialization complete! Ready for chat.")
         
+    def single_question(self,user_input):
+        try:
+            # Add user query to chat history
+            self.chat_history.add_user_message(user_input)
+            
+            # Retrieve documents using the already initialized retriever
+            retrieved_docs = self.retriever.invoke(user_input)
+            
+            # Prepare inputs
+            context = self.format_docs(retrieved_docs)
+            formatted_history = self.format_chat_history(self.chat_history)
+            
+            # Get the appropriate system message based on user proficiency
+            system_message = self.SYSTEM_MESSAGES[self.user_proficiency]
+            
+            # Create chain with the prompt template and injected system message
+            chain = self.prompt | self.llm | StrOutputParser()
+            
+            chain_input = {
+                "system_message": system_message,
+                "context": context, 
+                "question": user_input,
+                "chat_history": formatted_history
+            }
+
+            full_answer = ""
+            
+            # Stream the response
+            for chunk in chain.stream(chain_input):       
+                full_answer += chunk
+
+            
+
+            
+            # Add AI response to chat history
+            self.chat_history.add_ai_message(full_answer)
+                
+            return full_answer
+        except Exception as e:
+                print(f"Error: {str(e)}")
+                print("Continuing to next question...")
     def interactive_chat(self):
         while True:
             # Get user input
@@ -224,4 +265,8 @@ if __name__ == "__main__":
     user_proficiency = "average"  # Change this to "special_needs", "average", or "basic_medical"
     model_name = "mistral"  # Change this to the desired model name
     rag = Ollama_RAG(user_proficiency, model_name)
-    rag.interactive_chat()
+    #rag.interactive_chat()
+
+    while True: 
+        p = rag.single_question(input("You: "))
+        print(p)
