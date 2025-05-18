@@ -3,7 +3,7 @@ from pathlib import Path
 
 import torch
 
-from .utils import reranking_model
+from utils import reranking_model
 
 def rerank_with_bge_reranker(query: str, retrieved_docs: list, top_k: int = 10) -> list:
     """
@@ -41,13 +41,3 @@ def rerank_with_bge_reranker(query: str, retrieved_docs: list, top_k: int = 10) 
 
     # Return top-k
     return reranked[:top_k]
-
-# ROOT_DIR = Path(__file__).resolve().parents[2]
-# DATA_DIR = os.path.join(ROOT_DIR, "data")
-# INDEX_DIR = os.path.join(ROOT_DIR, "Backend/rag/faiss_index")
-#
-# input_query = "What long i have to wait after the procedure to eat?"
-# index_name = "index"
-# retrieved_docs = retrieve_context_from_vector_database(input_query, index_name, folder_path=INDEX_DIR)
-# results = rerank_with_bge_reranker("How long i have to wait after the procedure before i can eat?", retrieved_docs)
-# print(results)
