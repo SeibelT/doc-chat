@@ -14,7 +14,7 @@ INDEX_DIR = "faiss_index"
 
 
 
-def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=500, chunk_overlap=100):
+def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=1000, chunk_overlap=200):
 
     # Load the pdf documents
     all_docs = []

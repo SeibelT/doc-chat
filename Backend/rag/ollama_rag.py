@@ -27,7 +27,7 @@ chat_history = ChatMessageHistory()
 # User proficiency level - default to "average"
 user_proficiency = "average"
 proficiency_check_done = False
-question_counter = 0
+question_counter = 1
 
 # System messages for different user proficiency levels
 SYSTEM_MESSAGES = {

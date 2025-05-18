@@ -7,7 +7,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 DATA_DIR = os.path.join(ROOT_DIR, "data")
 INDEX_DIR = os.path.join(ROOT_DIR, "Backend/rag/faiss_index")
 
-def retrieve_context_from_vector_database(input_query,  index_dir, folder_path,score_threshold_limit=0.3):
+def retrieve_context_from_vector_database(input_query,  index_dir, folder_path,score_threshold_limit=0.3, no_of_documents=20):
 
     embed_model = embedding_model()
 
@@ -18,18 +18,12 @@ def retrieve_context_from_vector_database(input_query,  index_dir, folder_path,s
 
     retriever = vector_store.as_retriever(
         search_type="similarity_score_threshold",
-        search_kwargs={'score_threshold': score_threshold_limit}
+        search_kwargs={'k':no_of_documents, 'score_threshold': score_threshold_limit}
     )
 
-    result = retriever.invoke(input_query)
-    #print(f"retrievede")
-    print(result)
-
-
-
-input_query = "should i not eat before the procedure?"
-index_name = "index"
-retrieve_context_from_vector_database(input_query, index_name, folder_path=INDEX_DIR)
+    retrieved_docs = retriever.invoke(input_query)
+    
+    return retrieved_docs
 
 
 
