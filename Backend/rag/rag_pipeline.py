@@ -14,9 +14,6 @@ def rag_pipeline(input_query, index="index"):
     reranked_docs_with_scores = rerank_with_bge_reranker(input_query, retrieved_docs)
 
     reranked_chunks = [doc for doc, _ in reranked_docs_with_scores]
-    print(reranked_chunks)
 
     return reranked_chunks
 
-input_query = "For how long i should not eat or drink after the procedure?"
-rag_pipeline(input_query)

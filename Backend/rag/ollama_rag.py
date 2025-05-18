@@ -15,6 +15,7 @@ import random
 # Import from your existing scripts
 from utils import embedding_model
 from langchain_community.vectorstores import FAISS
+from rag_pipeline import rag_pipeline
 
 # Directory paths - adjust as needed
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -218,9 +219,10 @@ def interactive_chat(index_name, folder_path, model_name="mistral"):
             
             # Retrieve documents using the already initialized retriever
             retrieved_docs = retriever.invoke(user_input)
-            
+            context = rag_pipeline(input_query=user_input)
+
             # Prepare inputs
-            context = format_docs(retrieved_docs)
+            #context = format_docs(retrieved_docs)
             formatted_history = format_chat_history(chat_history)
             
             # Get the appropriate system message based on user proficiency
