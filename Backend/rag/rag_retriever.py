@@ -22,11 +22,12 @@ def retrieve_context_from_vector_database(input_query,  index_dir, folder_path,s
     )
 
     result = retriever.invoke(input_query)
-    print(f"retrievede")
+    #print(f"retrievede")
+    print(result)
 
 
 
-input_query = "What long i have to wait after the procedure to eat?"
+input_query = "should i not eat before the procedure?"
 index_name = "index"
 retrieve_context_from_vector_database(input_query, index_name, folder_path=INDEX_DIR)
 
