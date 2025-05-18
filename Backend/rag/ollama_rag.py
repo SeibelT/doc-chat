@@ -10,6 +10,7 @@ from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema import StrOutputParser
 from langchain.memory import ChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage
+import random
 
 # Import from your existing scripts
 from utils import embedding_model
@@ -23,9 +24,15 @@ INDEX_DIR = os.path.join(ROOT_DIR, "Backend/rag/faiss_index")
 # Chat history will be stored as a global variable
 chat_history = ChatMessageHistory()
 
-# Prompt template for RAG with chat history
-RAG_PROMPT_TEMPLATE = """
-You are a helpful assistant that answers questions about medical procedures based on the provided context.
+# User proficiency level - default to "average"
+user_proficiency = "average"
+proficiency_check_done = False
+question_counter = 0
+
+# Prompt templates for different user proficiency levels
+PROMPT_TEMPLATES = {
+    "special_needs": """
+You are an assistant for medical question-answering tasks and use the information provided through context, chat history and the procedure details. Assume I know nothing about medicine, struggle to understand and have a short memory span. Use very simple words and short, precise sentences (max. 30 words) in a simple structure. Don't talk down to me, but be extra clear and respectful. Focus on explaining the absolute basics. If the answer needs more words, ask before continuing. If you don't know something, refer to the treating physician.
 
 Previous conversation:
 {chat_history}
@@ -37,7 +44,41 @@ Current question: {question}
 
 Answer the current question using the context provided and considering the previous conversation if relevant. 
 If the context doesn't contain the answer, say "I don't have enough information to answer that question based on the provided context."
+Remember to use very simple language, short sentences, and focus on the absolute basics.
+""",
+
+    "average": """
+You are an assistant for medical question-answering tasks and use the information provided through context, chat history and the procedure details. Assume I have simple to no medical knowledge and want a simple, calm explanation. Speak casually, stay professional. Use medical terms but explain their meaning. Use clear phrases with concise information (max. 60 words). If you don't know something, refer to the treating physician.
+
+Previous conversation:
+{chat_history}
+
+Context for the current question:
+{context}
+
+Current question: {question}
+
+Answer the current question using the context provided and considering the previous conversation if relevant. 
+If the context doesn't contain the answer, say "I don't have enough information to answer that question based on the provided context."
+Remember to use casual but professional language, explain medical terms, and keep answers concise.
+""",
+
+    "basic_medical": """
+You are an assistant for medical question-answering tasks and use the information provided through context, chat history and the procedure details. Assume I understand basic anatomy and biology but am not a doctor. Use clear, professional language with casual tone. Use medical terms. Focus on the most relevant insights into the procedure. Keep answers informative (max. 90 words). If you don't have information about my question, say so.
+
+Previous conversation:
+{chat_history}
+
+Context for the current question:
+{context}
+
+Current question: {question}
+
+Answer the current question using the context provided and considering the previous conversation if relevant. 
+If the context doesn't contain the answer, say "I don't have enough information to answer that question based on the provided context."
+Remember to use medical terms appropriately, focus on relevant insights, and keep answers informative but not too long.
 """
+}
 
 def format_docs(docs):
     """Format documents into a string for the prompt"""
@@ -90,14 +131,65 @@ def print_chat_history():
 
 def clear_chat_history():
     """Clear the chat history"""
-    global chat_history
+    global chat_history, proficiency_check_done, question_counter
     chat_history = ChatMessageHistory()
+    proficiency_check_done = False
+    question_counter = 0
     print("Chat history cleared.")
+
+def check_should_ask_proficiency():
+    """Determine if we should ask the proficiency question"""
+    global question_counter, proficiency_check_done
+    
+    # Always ask on the second question if not asked yet
+    if question_counter == 2 and not proficiency_check_done:
+        return True
+    
+    # Randomly ask every 8-12 questions
+    if question_counter >= 8 and question_counter % random.randint(8, 12) == 0:
+        return True
+    
+    return False
+
+def ask_proficiency_question():
+    """Ask the proficiency level question and get user response"""
+    global user_proficiency, proficiency_check_done
+    
+    print("\n" + "="*50)
+    print("PROFICIENCY CHECK:")
+    print("How well did you understand the information given to you?")
+    print("A: Not well (I need very simple explanations)")
+    print("B: Okay (I understand the basics)")
+    print("C: Very well (I have basic medical knowledge)")
+    print("="*50)
+    
+    while True:
+        response = input("Your choice (A/B/C): ").strip().upper()
+        
+        if response == 'A':
+            user_proficiency = "special_needs"
+            proficiency_check_done = True
+            print("Thanks! I'll adjust my responses to be simpler and more direct.")
+            break
+        elif response == 'B':
+            user_proficiency = "average"
+            proficiency_check_done = True
+            print("Thanks! I'll provide balanced explanations.")
+            break
+        elif response == 'C':
+            user_proficiency = "basic_medical"
+            proficiency_check_done = True
+            print("Thanks! I'll use more medical terminology in my explanations.")
+            break
+        else:
+            print("Please enter A, B, or C.")
 
 def interactive_chat(index_name, folder_path, model_name="mistral"):
     """Run an interactive chat session with memory-efficient resource reuse"""
+    global question_counter
+    
     print("\n" + "="*50)
-    print("INTERACTIVE RAG CHAT")
+    print("INTERACTIVE MEDICAL RAG CHAT")
     print("Type 'exit' to quit, 'clear' to clear chat history, 'history' to view chat history")
     print("="*50)
     
@@ -118,14 +210,19 @@ def interactive_chat(index_name, folder_path, model_name="mistral"):
         search_kwargs={'score_threshold': 0.3}
     )
     
-    prompt = ChatPromptTemplate.from_template(RAG_PROMPT_TEMPLATE)
-    chain = prompt | llm | StrOutputParser()
-    
     print("Initialization complete! Ready for chat.")
     
     while True:
+        # Check if we should ask the proficiency question
+        if check_should_ask_proficiency():
+            ask_proficiency_question()
+            continue
+        
         # Get user input
         user_input = input("\nYou: ")
+        
+        # Increment question counter
+        question_counter += 1
         
         # Check for commands
         if user_input.lower() == 'exit':
@@ -149,6 +246,13 @@ def interactive_chat(index_name, folder_path, model_name="mistral"):
             context = format_docs(retrieved_docs)
             formatted_history = format_chat_history(chat_history)
             
+            # Get the appropriate prompt template based on user proficiency
+            current_prompt_template = PROMPT_TEMPLATES[user_proficiency]
+            prompt = ChatPromptTemplate.from_template(current_prompt_template)
+            
+            # Create a new chain with the updated prompt
+            chain = prompt | llm | StrOutputParser()
+            
             chain_input = {
                 "context": context, 
                 "question": user_input,
@@ -157,16 +261,13 @@ def interactive_chat(index_name, folder_path, model_name="mistral"):
             
             # Stream the response
             print("\n" + "="*50)
-            print("STREAMING ANSWER:")
+            print(f"STREAMING ANSWER (Proficiency level: {user_proficiency}):")
             print("-"*50)
-            #print(context)
-            #print("################ context ends ##################")
-
-
+            
             # Initialize an empty answer to collect the streamed response
             full_answer = ""
             
-            # Stream the response using the pre-initialized chain
+            # Stream the response using the chain with the appropriate prompt
             for chunk in chain.stream(chain_input):
                 print(chunk, end="", flush=True)
                 full_answer += chunk
@@ -177,8 +278,6 @@ def interactive_chat(index_name, folder_path, model_name="mistral"):
             
             # Add AI response to chat history
             chat_history.add_ai_message(full_answer)
-            #print(formatted_history)
-            #print("################ format ends ##################")
             
         except Exception as e:
             print(f"Error: {str(e)}")
