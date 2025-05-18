@@ -30,10 +30,10 @@ class Ollama_RAG:
         # Chat history will be stored as a global variable
         self.chat_history = ChatMessageHistory()
 
-       
+        self.question_counter = 0
 
         # System messages for different user proficiency levels
-        SYSTEM_MESSAGES = {
+        self.SYSTEM_MESSAGES = {
             "special_needs": """You are an assistant for medical question-answering tasks and use the information provided through context, chat history and the procedure details. Assume I know nothing about medicine, struggle to understand and have a short memory span. Use very simple words and short, precise sentences (max. 30 words) in a simple structure. Don't talk down to me, but be extra clear and respectful. Focus on explaining the absolute basics. If the answer needs more words, ask before continuing. If you don't know something, refer to the treating physician.""",
 
             "average": """You are an assistant for medical question-answering tasks and use the information provided through context, chat history and the procedure details. Assume I have simple to no medical knowledge and want a simple, calm explanation. Speak casually, stay professional. Use medical terms but explain their meaning. Use clear phrases with concise information (max. 60 words). If you don't know something, refer to the treating physician.""",
@@ -42,7 +42,8 @@ class Ollama_RAG:
         }
 
         # Get the appropriate system message based on user proficiency
-        self.system_message = SYSTEM_MESSAGES[user_proficiency]
+        self.user_proficiency = user_proficiency
+        self.system_message = self.SYSTEM_MESSAGES[self.user_proficiency]
         
         # Single template with system_message as a variable
         self.RAG_PROMPT_TEMPLATE = """
@@ -70,7 +71,7 @@ class Ollama_RAG:
         
         # Initialize resources ONCE outside the loop
         print("Initializing models and vector store...")
-        llm = Ollama(model=model_name, temperature=0.1)
+        self.llm = Ollama(model=model_name, temperature=0.1)
         embed_model = embedding_model()
         
         vector_store = FAISS.load_local(
@@ -90,13 +91,13 @@ class Ollama_RAG:
         
         print("Initialization complete! Ready for chat.")
         
-    def interactive_chat(self,index_name, folder_path, model_name="mistral"):
+    def interactive_chat(self):
         while True:
             # Get user input
             user_input = input("\nYou: ")
             
             # Increment question counter
-            question_counter += 1
+            self.question_counter += 1
             
             # Check for commands
             if user_input.lower() == 'exit':
@@ -218,9 +219,9 @@ class Ollama_RAG:
 
 
 
-if __main__ == "__main__":
+if __name__ == "__main__":
     # Example usage
     user_proficiency = "average"  # Change this to "special_needs", "average", or "basic_medical"
     model_name = "mistral"  # Change this to the desired model name
     rag = Ollama_RAG(user_proficiency, model_name)
-    rag.interactive_chat(rag.index_name, rag.INDEX_DIR, model_name)
+    rag.interactive_chat()
