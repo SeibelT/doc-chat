@@ -3,8 +3,7 @@ from pathlib import Path
 
 import torch
 
-from utils import reranking_model
-from rag_retriever import  retrieve_context_from_vector_database
+from .utils import reranking_model
 
 def rerank_with_bge_reranker(query: str, retrieved_docs: list, top_k: int = 10) -> list:
     """
@@ -38,6 +37,7 @@ def rerank_with_bge_reranker(query: str, retrieved_docs: list, top_k: int = 10) 
         key=lambda x: x[1],
         reverse=True
     )
+    print(f"Reranked the chunks successfully")
 
     # Return top-k
     return reranked[:top_k]
