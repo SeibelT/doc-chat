@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p Backend/rag/faiss_index data logs
+RUN mkdir -p App/rag/faiss_index data logs
 
 # Expose ports
 EXPOSE 7860 11434

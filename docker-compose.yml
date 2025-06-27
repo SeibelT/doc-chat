@@ -9,7 +9,7 @@ services:
       - "11434:11434"
     volumes:
       - ./data:/app/data
-      - ./Backend/rag/faiss_index:/app/Backend/rag/faiss_index
+      - ./App/rag/faiss_index:/app/App/rag/faiss_index
       - ollama_models:/root/.ollama
     environment:
       - OLLAMA_HOST=0.0.0.0
