@@ -1,0 +1,81 @@
+2025-06-27 14:36:37,607 - INFO - 
+==================================================
+2025-06-27 14:36:37,607 - INFO - INTERACTIVE MEDICAL RAG CHAT
+2025-06-27 14:36:37,607 - INFO - Type 'exit' to quit, 'clear' to clear chat history, 'history' to view chat history
+2025-06-27 14:36:37,607 - INFO - ==================================================
+2025-06-27 14:36:37,607 - INFO - Prompt template:
+2025-06-27 14:36:37,607 - INFO - 
+        {language_level_prompt}
+
+        Previous conversation:
+        {chat_history}
+
+        Context for the current question:
+        {context}
+
+        Current question: {question}
+
+        Answer the current question using the context provided and considering the previous conversation if relevant. 
+        If the context doesn't contain the answer, say "I don't have enough information to answer that question based on the provided context."
+        
+2025-06-27 14:36:37,607 - INFO - ==================================================
+2025-06-27 14:36:37,607 - INFO - Initializing models and vector store...
+2025-06-27 14:36:40,866 - INFO - Use pytorch device_name: cpu
+2025-06-27 14:36:40,866 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2025-06-27 14:36:42,691 - INFO - Loading faiss with AVX2 support.
+2025-06-27 14:36:42,709 - INFO - Successfully loaded faiss with AVX2 support.
+2025-06-27 14:36:42,713 - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes. This is only an error if you're trying to use GPU Faiss.
+2025-06-27 14:36:42,713 - INFO - Initialization complete! Ready for chat.
+2025-06-27 14:39:20,787 - INFO - Initialization complete!
+2025-06-27 14:39:25,890 - INFO - 
+==================================================
+2025-06-27 14:39:25,890 - INFO - INTERACTIVE MEDICAL RAG CHAT
+2025-06-27 14:39:25,890 - INFO - Type 'exit' to quit, 'clear' to clear chat history, 'history' to view chat history
+2025-06-27 14:39:25,890 - INFO - ==================================================
+2025-06-27 14:39:25,890 - INFO - Prompt template:
+2025-06-27 14:39:25,890 - INFO - 
+        {language_level_prompt}
+
+        Previous conversation:
+        {chat_history}
+
+        Context for the current question:
+        {context}
+
+        Current question: {question}
+
+        Answer the current question using the context provided and considering the previous conversation if relevant. 
+        If the context doesn't contain the answer, say "I don't have enough information to answer that question based on the provided context."
+        
+2025-06-27 14:39:25,890 - INFO - ==================================================
+2025-06-27 14:39:25,890 - INFO - Initializing models and vector store...
+2025-06-27 14:39:26,146 - INFO - Use pytorch device_name: cpu
+2025-06-27 14:39:26,146 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2025-06-27 14:39:28,126 - INFO - Initialization complete! Ready for chat.
+2025-06-27 14:39:28,407 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-27 14:39:28,429 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2025-06-27 14:39:29,050 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:26:33,546 - INFO - Initialization complete!
+2025-06-27 16:26:39,370 - INFO - HTTP Request: GET http://127.0.0.1:7887/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-27 16:26:39,507 - INFO - HTTP Request: HEAD http://127.0.0.1:7887/ "HTTP/1.1 200 OK"
+2025-06-27 16:26:39,679 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:28:58,912 - INFO - Initialization complete!
+2025-06-27 16:29:04,402 - INFO - HTTP Request: GET http://127.0.0.1:7887/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-27 16:29:04,444 - INFO - HTTP Request: HEAD http://127.0.0.1:7887/ "HTTP/1.1 200 OK"
+2025-06-27 16:29:04,927 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:31:03,826 - INFO - Initialization complete!
+2025-06-27 16:31:45,247 - INFO - Initialization complete!
+2025-06-27 16:31:50,805 - INFO - HTTP Request: GET http://127.0.0.1:7887/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-27 16:31:50,820 - INFO - HTTP Request: HEAD http://127.0.0.1:7887/ "HTTP/1.1 200 OK"
+2025-06-27 16:31:51,292 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:31:51,420 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:32:55,902 - INFO - Initialization complete!
+2025-06-27 16:33:01,465 - INFO - HTTP Request: GET http://127.0.0.1:7887/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-27 16:33:01,496 - INFO - HTTP Request: HEAD http://127.0.0.1:7887/ "HTTP/1.1 200 OK"
+2025-06-27 16:33:02,004 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:33:02,155 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:33:39,954 - INFO - Initialization complete!
+2025-06-27 16:33:45,547 - INFO - HTTP Request: GET http://127.0.0.1:7887/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-27 16:33:45,576 - INFO - HTTP Request: HEAD http://127.0.0.1:7887/ "HTTP/1.1 200 OK"
+2025-06-27 16:33:45,979 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-27 16:33:46,137 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"

@@ -1,1 +1,8 @@
-Backend/rag/__pycache__/utils.cpython-312.pyc
+Backend/rag/__pycache__
+.gradio
+data/*
+
+meta_data/faiss_index
+# Ignore Python cache files
+__pycache__/
+*/__pycache__
