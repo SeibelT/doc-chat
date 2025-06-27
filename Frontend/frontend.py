@@ -52,7 +52,7 @@ class ChatApp:
                     gr.Image(value="./Frontend/assets/LogoP1.png", height=250, width=250, show_label=False, show_download_button=False, elem_id="icon")
                 gr.Markdown("## How should I talk to you?")
                 for idx, (key,val) in enumerate(self.language_modes.items()):
-                    gr.Button(val, elem_id=f"lang-button-{idx}").click(self.go_to_chat, [gr.State(key)], [self.current_page, self.selected_lang])
+                    gr.Button(key, elem_id=f"lang-button-{idx}").click(self.go_to_chat, [gr.State(key)], [self.current_page, self.selected_lang])
 
             with gr.Column(visible=False) as page3:
                 

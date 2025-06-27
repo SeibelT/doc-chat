@@ -36,7 +36,7 @@ class Ollama_RAG:
     def __init__(self,language_level,prompt_dict,rag_dir,model_name,logger):
         self.index_name = "index"
         
-
+        self.prompt_dict = prompt_dict
         self.language_level_prompt= self.set_language_prompt(language_level)
         # Chat history will be stored as a global variable
         self.chat_history = ChatMessageHistory()

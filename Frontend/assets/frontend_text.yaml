@@ -1,9 +1,16 @@
 # Sprachmodi
+#language_modes : {
+#    "special_needs": "simple",
+#    "average": "standard",
+#    "basic medical": "medical terminology"
+#}
+
 language_modes : {
-    "special_needs": "simple",
-    "average": "standard",
-    "basic medical": "medical terminology"
+    "simple": "special_needs",
+    "standard": "average",
+    "medical terminology": "basic medical"
 }
+
 
 # Themen
 topics : [
