@@ -30,7 +30,7 @@ python app.py
 
 ## What it does
 
-- Answers medical questions about procedures (focused on endoscopy)
+- Answers medical questions about procedures 
 - Adjusts language complexity based on user needs
 - Runs 100% locally - your data stays private
 - Uses RAG to provide accurate information from medical PDFs
