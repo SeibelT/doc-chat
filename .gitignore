@@ -1,3 +1,38 @@
-Backend/rag/__pycache__/utils.cpython-312.pyc
-__pycache__
-.pdf
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# PDF files
+*.pdf
+*.PDF
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Vector database
+faiss_index/
+chroma_db/
+
+# Model cache
+.cache/
+models/
