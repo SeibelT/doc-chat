@@ -31,8 +31,9 @@ RUN echo '#!/bin/bash\n\
 ollama serve &\n\
 sleep 5\n\
 ollama pull mistral\n\
+echo "Downloading HuggingFace embedding model..."\n\
+python -c "from langchain.embeddings import HuggingFaceEmbeddings; e = HuggingFaceEmbeddings(model_name=\"BAAI/bge-large-en-v1.5\"); e.embed_query(\"test\")"\n\
 python setup.py\n\
 python app.py' > start.sh && chmod +x start.sh
 
 CMD ["./start.sh"]
-
