@@ -10,11 +10,11 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DATA_DIR = os.path.join(ROOT_DIR, "data")
-INDEX_DIR = "faiss_index"
+INDEX_DIR = "Backend/rag/faiss_index"
 
 
 
-def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=1000, chunk_overlap=200):
+def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=500, chunk_overlap=100):
 
     # Load the pdf documents
     all_docs = []
