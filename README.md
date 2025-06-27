@@ -1,5 +1,5 @@
 
-![](.\Frontend\assets\docchat.png)
+![](./Frontend/assets/docchat.png)
 This intelligent chatbot is designed to support patients in understanding their medical procedures through clear, accessible explanations based on the official informed consent form. It  ensures that patients are truly informed before giving their consent. By providing answers in real-time and using easy-to-understand language, the chatbot enhances patient confidence, supports compliance, and improves the overall consent process for healthcare providers.
 ## Table of Contents
 
