@@ -6,3 +6,5 @@ meta_data/faiss_index
 # Ignore Python cache files
 __pycache__/
 */__pycache__
+test.py 
+test.ipynb

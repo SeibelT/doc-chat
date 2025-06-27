@@ -1,6 +1,6 @@
 import gradio as gr
 import yaml
-
+from ..Backend.rag_model import dummy_model
 
 class ChatApp:
     def __init__(self,Model ,frontend_dict_path = "./Frontend/assets/frontend_text.yaml"):
@@ -82,7 +82,7 @@ class ChatApp:
 
 
 if __name__ == "__main__":
-    app = ChatApp()
+    app = ChatApp(dummy_model())
     demo = app.build()
     demo.launch()
 
