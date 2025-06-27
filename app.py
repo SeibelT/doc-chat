@@ -1,5 +1,5 @@
 import gradio as gr	
-from Backend.rag.ollama_rag_class import Ollama_RAG
+from App.rag.ollama_rag_class import Ollama_RAG
 
 user_proficiency = "average"  # Change this to "special_needs", "average", or "basic_medical"
 model_name = "mistral"  # Change this to the desired model name
