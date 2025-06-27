@@ -1,6 +1,6 @@
 import gradio as gr
 import yaml
-from ..Backend.rag_model import dummy_model
+
 
 class ChatApp:
     def __init__(self,Model ,frontend_dict_path = "./Frontend/assets/frontend_text.yaml"):
@@ -27,23 +27,23 @@ class ChatApp:
         self.Model.set_language_prompt(self.language_mode.value)
         return "page3", lang_mode
 
+    def change_examplequestions(self,topic):
+        self.selected_topic = gr.State(topic)
+        self.selected_questions.value = gr.State(self.topic_questions[self.selected_topic.value])
+        return "page3"
+
+
     def go_to_start(self):
         return "page1"
-
-    # Thema wählen und Fragen in Chat laden
-    def update_topic_and_history(self,topic, lang):
-        questions = self.topic_questions.get(topic, [])
-        history = [(q, f"[{lang} | {topic}] Demo-Antwort auf: {q}") for q in questions]
-        return topic, f"## Topic: {topic}", history
-
-
+    
 
     def build(self):
         # UI
         with gr.Blocks(css=".gradio-container { max-width: 800px; margin: auto; }") as demo:
-            current_page = gr.State("page1")
-            selected_lang = gr.State("Standard")
-            selected_topic = gr.State(self.topics[0])
+            self.current_page = gr.State("page1")
+            self.selected_lang = gr.State("Standard")
+            self.selected_topic = gr.State(self.topics[0])
+            self.selected_questions = gr.State(self.topic_questions[self.selected_topic.value])
 
 
 
@@ -52,33 +52,71 @@ class ChatApp:
                     gr.Image(value="./Frontend/assets/LogoP1.png", height=250, width=250, show_label=False, show_download_button=False, elem_id="icon")
                 gr.Markdown("## How should I talk to you?")
                 for idx, (key,val) in enumerate(self.language_modes.items()):
-                    gr.Button(val, elem_id=f"lang-button-{idx}").click(self.go_to_chat, [gr.State(key)], [current_page, selected_lang])
+                    gr.Button(val, elem_id=f"lang-button-{idx}").click(self.go_to_chat, [gr.State(key)], [self.current_page, self.selected_lang])
 
             with gr.Column(visible=False) as page3:
-                topic_heading = gr.Markdown("##")
-                gr.Markdown("### Choose a topic:")
-                chat = gr.ChatInterface(
-                    fn=self.respond,
-                    examples=["hello", "hola", "merhaba"],
-                    title="Echo Bot",
-                    
-                )
+                
+                bots = self.topic_questions
+                
+                # Create one ChatInterface per bot, each in a hidden container
+                containers = {}
+                for i, (bot_name, bot_info) in enumerate(bots.items()):
+                    with gr.Column(visible=(i == 0)) as container:  # Show first one
+                        gr.ChatInterface(
+                            fn=self.respond,
+                            title=bot_name,
+                            examples=bot_info
+                        )
+                    containers[bot_name] = container
+                
+                
+                    # Create a button for each bot
+                bot_buttons = {}
+                for bot_name in bots:
+                    bot_buttons[bot_name] = gr.Button(bot_name)
 
+                back_button = gr.Button("Back to the other topics")
+                back_button.click(lambda: "page1", None, self.current_page)
+                # Create callbacks dynamically
+                for selected_name, btn in bot_buttons.items():
+                    def make_callback(name=selected_name):
+                        def toggle():
+                            updates = []
+                            for bot_name in bots:
+                                is_visible = (bot_name == name)
+                                updates.append(gr.update(visible=is_visible))
+                            return updates
+                        return toggle
+
+                    btn.click(
+                        make_callback(),
+                        outputs=[containers[bot_name] for bot_name in bots]
+                    )
 
             def render(page, lang=None, topic=None):
                 return {
                     page1: gr.update(visible=page == "page1"),
                     page3: gr.update(visible=page == "page3"),
-                    topic_heading: gr.update(value=f"## Topic: {topic}" if topic else "")
+                    
+                    #chat : gr.update(examples=self.selected_questions)
                 }
 
-            current_page.change(render, [current_page, selected_lang, selected_topic], [page1, page3, topic_heading])
+            self.current_page.change(render, [self.current_page, self.selected_lang, self.selected_topic], [page1, page3, ])
 
             gr.HTML(self.html_code)
     
         return demo
 
 
+
+
+class dummy_model:
+    def __init__(self):
+        self.language_level_prompt = "default"
+    def single_question(self,message):
+        return message + "  " + self.language_level_prompt
+    def set_language_prompt(self,language):
+        self.language_level_prompt = f"new language = {language}"
 
 
 if __name__ == "__main__":

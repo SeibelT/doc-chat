@@ -97,7 +97,7 @@ if __name__ == "__main__":
         print("Prompts loaded successfully.",prompts)
     
     # Step 5: Init RAG Model
-    rag_model = dummy_model() #Ollama_RAG(init_prompt,prompts,index_dir,model_name,logger)  
+    rag_model = Ollama_RAG(init_prompt,prompts,index_dir,model_name,logger)  
     # Step 4: Launch Gradio app
     launch_gradio(rag_model)
 
