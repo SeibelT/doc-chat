@@ -94,7 +94,6 @@ python ollama_manager.py stop
 DOC-CHAT/
 ├── app.py                              # Main Gradio interface
 ├── ollama_manager.py                   # Ollama management tool
-├── ollama_rag_class.py                 # RAG logic
 ├── setup.py                            # Automated setup
 ├── requirements.txt                    # Python dependencies
 ├── Dockerfile                          # Docker configuration
@@ -108,6 +107,7 @@ DOC-CHAT/
 │       ├── faiss_index/                # Vector database
 │       ├── create_vector_database_from_pdfs.py
 │       ├── utils.py                    # Utility functions
+│       ├── ollama_rag_class.py                 # RAG logic
 │       └── __init__.py                 # Python package init
 ├── data/
 │   └── pdf_1.pdf                       # Medical PDFs
