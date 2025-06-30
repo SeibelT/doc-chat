@@ -14,5 +14,5 @@ sentence-transformers
 rank_bm25
 gradio
 notebook
-
+fpdf
 utils
