@@ -50,13 +50,14 @@ class Ollama_RAG:
     """Class for RAG with Ollama and FAISS"""
     
     def __init__(self,language_level,prompt_dict,rag_dir,model_name,logger, history_file="./meta_data/output/chat_history.json"):
+        # Chat history will be stored as a global variable
+        self.chat_history = FileChatMessageHistory(file_path=history_file)
+        #self.chat_history = ChatMessageHistory()
+
         self.index_name = "index"
         
         self.prompt_dict = prompt_dict
         self.language_level_prompt= self.set_language_prompt(language_level)
-        # Chat history will be stored as a global variable
-        self.chat_history = FileChatMessageHistory(file_path=history_file)
-        #self.chat_history = ChatMessageHistory()
 
         # Single template with system_message as a variable
         self.RAG_PROMPT_TEMPLATE = """
