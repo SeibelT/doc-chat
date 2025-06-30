@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore" )
 import os
 import uuid
-import fitz
+
 import io
 import base64
 import faiss

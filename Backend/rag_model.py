@@ -19,7 +19,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 # to sroye messages
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.messages import BaseMessage, messages_from_dict, messages_to_dict
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 import json
 import os
 
@@ -41,6 +41,7 @@ class dummy_model:
         return answer
 
     def set_language_prompt(self, language):
+        self.chat_history.add_message(SystemMessage(content=f"Language prompt set to: {language}"))
         self.language_level_prompt = language
 
 
@@ -105,6 +106,7 @@ class Ollama_RAG:
         
         self.logger.info("Initialization complete! Ready for chat.")
     def set_language_prompt(self,language_level):
+        self.chat_history.add_message(SystemMessage(content=f"Language prompt set to: {language_level}"))
         return self.prompt_dict[language_level]
 
     def single_question(self,user_input):
