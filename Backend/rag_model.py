@@ -19,7 +19,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 # to sroye messages
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.messages import BaseMessage, messages_from_dict, messages_to_dict
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 import json
 import os
 
@@ -41,6 +41,7 @@ class dummy_model:
         return answer
 
     def set_language_prompt(self, language):
+        self.chat_history.add_message(SystemMessage(content=f"Language prompt set to: {language}"))
         self.language_level_prompt = language
 
 
@@ -49,28 +50,34 @@ class Ollama_RAG:
     """Class for RAG with Ollama and FAISS"""
     
     def __init__(self,language_level,prompt_dict,rag_dir,model_name,logger, history_file="./meta_data/output/chat_history.json"):
+        # Chat history will be stored as a global variable
+        if os.path.exists(history_file):
+            os.remove(history_file)
+        self.chat_history = FileChatMessageHistory(file_path=history_file)
+        #self.chat_history = ChatMessageHistory()
+
         self.index_name = "index"
         
         self.prompt_dict = prompt_dict
         self.language_level_prompt= self.set_language_prompt(language_level)
-        # Chat history will be stored as a global variable
-        self.chat_history = FileChatMessageHistory(file_path=history_file)
-        #self.chat_history = ChatMessageHistory()
 
         # Single template with system_message as a variable
         self.RAG_PROMPT_TEMPLATE = """
+        # INSTRUCTIONS:
         {language_level_prompt}
-
-        Previous conversation:
-        {chat_history}
-
-        Context for the current question:
-        {context}
-
-        Current question: {question}
-
         Answer the current question using the context provided and considering the previous conversation if relevant. 
         If the context doesn't contain the answer, say 'I do not have enough information to answer that question based on the provided context.'
+
+        # HISTORY:
+        {chat_history}
+
+        # CONTEXT:
+        {context}
+
+        # USER QUESTION 
+        {question}
+        
+        # ANSWER: 
         """
 
     
@@ -105,6 +112,7 @@ class Ollama_RAG:
         
         self.logger.info("Initialization complete! Ready for chat.")
     def set_language_prompt(self,language_level):
+        self.chat_history.add_message(SystemMessage(content=f"Language prompt set to: {language_level}"))
         return self.prompt_dict[language_level]
 
     def single_question(self,user_input):
@@ -116,14 +124,11 @@ class Ollama_RAG:
         context = self.format_docs(retrieved_docs)
         formatted_history = self.format_chat_history(self.chat_history)
         
-        # Get the appropriate system message based on user proficiency
-        system_message = self.language_level_prompt
         
         # Create chain with the prompt template and injected system message
         chain = self.prompt | self.llm | StrOutputParser()
         
         chain_input = {
-            "system_message": system_message,
             "context": context, 
             "question": user_input,
             "chat_history": formatted_history,

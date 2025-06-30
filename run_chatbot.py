@@ -98,11 +98,12 @@ if __name__ == "__main__":
 
     if check_missing: 
 
-        if is_model_available(model_name) & (not is_dummy):
-            print(f"Model '{model_name}' is available locally.")
-        elif not is_dummy:
-            print(f"Model '{model_name}' is not available locally.")
-            pull_model(model_name)
+        if not is_dummy:
+            if is_model_available(model_name):
+                print(f"Model '{model_name}' is available locally.")
+            else:
+                print(f"Model '{model_name}' is not available locally.")
+                pull_model(model_name)
 
         # Step 3: Check if VectorDB is created else create from documents in data directory
         if not os.path.exists("meta_data/faiss_index"):
@@ -118,8 +119,8 @@ if __name__ == "__main__":
         with open(path_prompts, 'r', encoding='cp1252') as file:
             prompts = yaml.safe_load(file)
             init_prompt = list(prompts.keys())[0]
-        print("Prompts loaded successfully.",prompts.keys())
-    
+        print("Prompts loaded successfully.",prompts.items())
+        print(init_prompt)
     # Step 5: Init RAG Model
     rag_model = Ollama_RAG(init_prompt,prompts,index_dir,model_name,logger)  if not is_dummy else dummy_model()
     # Step 4: Launch Gradio app

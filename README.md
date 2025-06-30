@@ -54,6 +54,7 @@ cd repository-name
 
 # Create virtual environment with venv 
 pip install -m venv .env
+python -m venv .venv
 
 # Activate Virtual Environment
 pip source ./.env/bin/activate
@@ -66,6 +67,10 @@ python ./run_chatbot.py
 ### Example Output
 Provide a brief description or screenshots of expected outputs (if applicable).
 
+
+### Future Implementation 
+* History based Retriever 
+* 
 ## Citation
 
 ## Acknowledgments # FIXME !!!!
@@ -73,3 +78,9 @@ Mention contributors, libraries, and resources used in the project.
 
 ## License
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details.
+
+
+## TODO
+explain how to load other vector db ( deleting vector database)
+
+BUG gradio not installed 

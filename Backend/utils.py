@@ -1,17 +1,12 @@
-import warnings
-warnings.filterwarnings("ignore" )
 import os
 import uuid
-
+import fitz
 import io
 import base64
 import faiss
 import torch
 import pdfplumber
 
-from langchain.embeddings import HuggingFaceEmbeddings
-from transformers import pipeline
-import subprocess
 from io import BytesIO
 from PIL import  Image
 from langchain.document_loaders import UnstructuredPDFLoader
@@ -20,8 +15,7 @@ from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
 from transformers import BlipProcessor, BlipForConditionalGeneration
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+
 
 
 
@@ -177,8 +171,6 @@ def vision_model(model_name: str = "Salesforce/blip-image-captioning-base"):
     model = BlipForConditionalGeneration.from_pretrained(model_name)
 
     return processor, model
-
-
 def summarise_images(img):
     try:
         image = Image.open(img).convert("RGB")
@@ -246,7 +238,7 @@ def table_to_html(table):
     return html
 
 
-def create_vector_store(embeddings_model, n_list:int=10):
+def create_vector_store(embeddings_model, n_list:int=50):
     dimensions = len(embeddings_model.embed_query("hello world"))
     quantizer = faiss.IndexFlatL2(dimensions)
     index = faiss.IndexIVFFlat(quantizer, dimensions,n_list, faiss.METRIC_L2 )
@@ -258,49 +250,3 @@ def create_vector_store(embeddings_model, n_list:int=10):
         index_to_docstore_id={})
 
     return vector_store
-
-
-def summarise_chain(model):
-    prompt = """
-    You are a helpful assistant. Your task is to read the following content (which may be a table or a section of text) and generate a concise and informative summary.
-
-    respond only with the summary, no additional comment 
-
-    Do not start  your message by saying "here is your summary" or anything like that.
-
-    just give the summary as it is. 
-
-    Table or Text Chunk: {element}
-    """
-
-    prompt = ChatPromptTemplate.from_template(prompt)
-    chain = prompt | model | StrOutputParser()
-
-    return chain
-
-
-def embedding_model(model_name="BAAI/bge-large-en-v1.5"):
-
-    return HuggingFaceEmbeddings(model_name=model_name)
-
-
-def reranking_model(model_name="BAAI/bge-reranker-large", top_k=5):
-
-    # Initialize the bge-reranker-large model once
-    reranker = pipeline(
-        "text-classification",
-        model=model_name,
-        top_k=top_k,
-        device=0  # Set to 0 if using CUDA (GPU)
-    )
-
-    return  reranker
-
-
-def is_model_available(model_name):
-    result = subprocess.run(["ollama", "list"], capture_output=True, text=True)
-    return model_name in result.stdout
-
-def pull_model(model_name):
-    print(f"Pulling model '{model_name}'...")
-    subprocess.run(["ollama", "pull", model_name])

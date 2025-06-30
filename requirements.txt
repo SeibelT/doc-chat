@@ -10,9 +10,10 @@ openai
 pdfplumber
 pgvector
 faiss-cpu
+fitz
 sentence-transformers
 rank_bm25
 gradio
 notebook
-
+fpdf
 utils
