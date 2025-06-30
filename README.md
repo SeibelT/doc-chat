@@ -106,7 +106,7 @@ docker rmi <image_id_or_name>
 git clone https://github.com/username/repository-name.git
 
 # Navigate to the directory
-cd repository-name
+cd doc-chat
 
 # Create virtual environment with venv 
 pip install venv
@@ -114,7 +114,10 @@ pip install venv
 python -m venv .venv
 
 # Activate Virtual Environment
-pip source ./.env/bin/activate
+source ./.env/bin/activate
+
+# Install Requirements ( only needs to be done once at the beginning)
+pip install -r requirements.txt
 
 # Run code (with activated virtual environment)
 
