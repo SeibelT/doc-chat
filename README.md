@@ -125,7 +125,7 @@ Between topics, the previous chat history changes—this is a feature, not a bug
 The history is also automatically stored in a file and can always be accessed, so that the doctor can always check what was proposed by the LLM.
 
 </td>
-<td width="30%">
+<td width="50%">
     <img src="meta_data/page2.PNG" alt="Page image" width="100%">
 </td>
 </tr>
