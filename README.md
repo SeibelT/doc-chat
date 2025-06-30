@@ -46,7 +46,7 @@ We provide two ways of installing doc 2 chat.
 2.) Python 
 
 ### 1.) Docker
-# TODO !!!
+<<== TODO:Insert docker documentations here!   ==>>
 ### 2.) Python
 
 **Steps**:
