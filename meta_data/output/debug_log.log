@@ -775,3 +775,81 @@
 2025-06-30 16:38:37,245 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
 2025-06-30 16:38:37,381 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
 2025-06-30 16:38:37,490 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:36:00,060 - INFO - 
+==================================================
+2025-06-30 16:36:00,060 - INFO - INTERACTIVE MEDICAL RAG CHAT
+2025-06-30 16:36:00,060 - INFO - Type 'exit' to quit, 'clear' to clear chat history, 'history' to view chat history
+2025-06-30 16:36:00,060 - INFO - ==================================================
+2025-06-30 16:36:00,060 - INFO - Prompt template:
+2025-06-30 16:36:00,060 - INFO - 
+        # INSTRUCTIONS:
+        {language_level_prompt}
+        Answer the current question using the context provided and considering the previous conversation if relevant. 
+        If the context doesn't contain the answer, say 'I do not have enough information to answer that question based on the provided context.'
+
+        # HISTORY:
+        {chat_history}
+
+        # CONTEXT:
+        {context}
+
+        # USER QUESTION 
+        {question}
+        
+        # ANSWER: 
+        
+2025-06-30 16:36:00,060 - INFO - ==================================================
+2025-06-30 16:36:00,060 - INFO - Initializing models and vector store...
+2025-06-30 16:36:00,121 - INFO - Use pytorch device_name: cpu
+2025-06-30 16:36:00,121 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2025-06-30 16:38:01,207 - INFO - Initialization complete! Ready for chat.
+2025-06-30 16:38:01,430 - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-06-30 16:38:01,499 - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-06-30 16:38:01,590 - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-06-30 16:38:01,939 - INFO - HTTP Request: GET http://localhost:7860/startup-events "HTTP/1.1 200 OK"
+2025-06-30 16:38:01,963 - INFO - HTTP Request: HEAD http://localhost:7860/ "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,199 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,204 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,259 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,310 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,366 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,476 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 16:38:02,547 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:48:51,704 - INFO - Initialization complete!
+2025-06-30 18:49:04,510 - INFO - 
+==================================================
+2025-06-30 18:49:04,510 - INFO - INTERACTIVE MEDICAL RAG CHAT
+2025-06-30 18:49:04,510 - INFO - Type 'exit' to quit, 'clear' to clear chat history, 'history' to view chat history
+2025-06-30 18:49:04,510 - INFO - ==================================================
+2025-06-30 18:49:04,510 - INFO - Prompt template:
+2025-06-30 18:49:04,510 - INFO - 
+        # INSTRUCTIONS:
+        {language_level_prompt}
+        Answer the current question using the context provided and considering the previous conversation if relevant. 
+        If the context doesn't contain the answer, say 'I do not have enough information to answer that question based on the provided context.'
+
+        # HISTORY:
+        {chat_history}
+
+        # CONTEXT:
+        {context}
+
+        # USER QUESTION 
+        {question}
+        
+        # ANSWER: 
+        
+2025-06-30 18:49:04,510 - INFO - ==================================================
+2025-06-30 18:49:04,510 - INFO - Initializing models and vector store...
+2025-06-30 18:49:04,611 - INFO - Use pytorch device_name: cuda:0
+2025-06-30 18:49:04,611 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2025-06-30 18:49:08,089 - INFO - Initialization complete! Ready for chat.
+2025-06-30 18:49:09,284 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,290 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,296 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,498 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,586 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,622 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,701 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,808 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-30 18:49:09,937 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
