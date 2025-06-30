@@ -89,41 +89,49 @@ python ./run_chatbot.py --model dummy --check_missing False
 
 ## Usage
 ### Page 1
-<div style="display: flex; align-items: flex-start; gap: 2em;">
-    <img src="meta_data/page1.PNG" alt=" " width="30%"/>
-    <div>
-        <p>
-            <strong>Starting Page:</strong><br>
-            Choosing the right level helps ensure that the patient receives information in a way that is most helpful and least confusing for them
+<table>
+<tr>
+<td width="30%">
+    <img src="meta_data/page1.PNG" alt="Page image" width="100%">
+</td>
+<td>
 
-***Simple:*** The chatbot uses very basic, everyday language. It avoids medical jargon and explains things in a way that anyone, regardless of background, can understand. 
+**Starting Page:**  
+Choosing the right level helps ensure that the patient receives information in a way that is most helpful and least confusing for them
 
-***Standard***:
-The chatbot uses general language that might include some common medical terms, but still aims to be accessible to most people. It balances clarity with a bit more detail, suitable for users who are comfortable with basic health vocabulary.
+**Simple:** The chatbot uses very basic, everyday language. It avoids medical jargon and explains things in a way that anyone, regardless of background, can understand.
+
+***Standard***: The chatbot uses general language that might include some common medical terms, but still aims to be accessible to most people. It balances clarity with a bit more detail, suitable for users who are comfortable with basic health vocabulary.
 
 ***Medical Terminology***:
 The chatbot uses precise, technical medical language. This level is intended for healthcare professionals or patients who are familiar with medical terms and want detailed, accurate information. It may include specific diagnoses, procedures, or pharmacological terms.
-        </p>
-    </div>
-</div>
+</td>
+</tr>
+</table>
 
 ### Page 2
-<div style="display: flex; align-items: flex-start; gap: 2em;">
-    <div>
-        <p>
-            <strong>Main Page:</strong><br>
-            On the main page, you will find a variety of categories covering different aspects of your medical procedure. Each category includes example questions designed to guide your exploration and deepen your understanding. You can select any of these questions to see clear, concise answers, or you may enter your own questions into the chat interface for personalized information.
+
+<table>
+<tr>
+<td>
+
+**Main Page:**  
+On the main page, you will find a variety of categories covering different aspects of your medical procedure. Each category includes example questions designed to guide your exploration and deepen your understanding. You can select any of these questions to see clear, concise answers, or you may enter your own questions into the chat interface for personalized information.
 
 The chatbot is designed to adapt to your needs—if you wish to change the level of detail or complexity in the explanations, simply click "Back to Language Settings" at any time. This allows you to choose between simple, standard, or medical terminology explanations, ensuring that the information is presented in a way that matches your comfort level and preferences. This flexible approach empowers you to make informed decisions and feel confident throughout the consent process.
 
-Between Topics, the previous Chat History changes, this is a Feature not a Bug. It allows to keep answered questions within the category. 
-The Model however will see all inputs in the exact order independend from the Categories.
+Between topics, the previous chat history changes—this is a feature, not a bug. It allows answered questions to remain within the category. However, the model will see all inputs in the exact order, independent of the categories.
 
-The history is also automatically stored with a file and can always be accessed, so that the doctor can always check what was proposed by the LLM. 
-        </p>
-    </div>
-    <img src="meta_data/page2.PNG" alt=" " width="50%"/>
-</div>
+The history is also automatically stored in a file and can always be accessed, so that the doctor can always check what was proposed by the LLM.
+
+</td>
+<td width="30%">
+    <img src="meta_data/page2.PNG" alt="Page image" width="100%">
+</td>
+</tr>
+</table>
+
+ 
 
 ## FAQ
 
