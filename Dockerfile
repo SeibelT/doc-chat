@@ -1,3 +1,4 @@
+# Dockerfile
 FROM python:3.9-slim
 
 # Install system dependencies
@@ -21,15 +22,17 @@ RUN mkdir -p meta_data/faiss_index meta_data/output data
 # Expose Gradio port
 EXPOSE 7860
 
-# Create startup script
+# Create startup script with environment variable support
 RUN echo '#!/bin/bash\n\
 echo "Waiting for Ollama service..."\n\
 sleep 10\n\
-echo "Pulling Mistral model..."\n\
-curl -X POST http://ollama:11434/api/pull -d "{\"name\": \"mistral\"}"\n\
+if [ "$MODEL_NAME" != "dummy" ]; then\n\
+    echo "Pulling $MODEL_NAME model..."\n\
+    curl -X POST http://ollama:11434/api/pull -d "{\"name\": \"$MODEL_NAME\"}"\n\
+fi\n\
 echo "Downloading HuggingFace embedding model..."\n\
 python -c "from langchain.embeddings import HuggingFaceEmbeddings; e = HuggingFaceEmbeddings(model_name=\"BAAI/bge-large-en-v1.5\"); e.embed_query(\"test\")"\n\
 echo "Starting DocChat application..."\n\
-python run_chatbot.py --model mistral --check_missing True' > start.sh && chmod +x start.sh
+python run_chatbot.py --model ${MODEL_NAME:-mistral} --check_missing ${CHECK_MISSING:-True}' > start.sh && chmod +x start.sh
 
 CMD ["./start.sh"]

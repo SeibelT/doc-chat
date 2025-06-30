@@ -20,6 +20,8 @@ services:
     environment:
       - OLLAMA_HOST=http://ollama:11434
       - GRADIO_SERVER_NAME=0.0.0.0
+      - MODEL_NAME=${MODEL_NAME:-mistral}
+      - CHECK_MISSING=${CHECK_MISSING:-True}
     depends_on:
       - ollama
     restart: unless-stopped
