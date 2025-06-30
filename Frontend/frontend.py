@@ -48,6 +48,7 @@ class ChatApp:
 
 
             with gr.Column(visible=True) as page1:
+                gr.Markdown("# Welcome to Doc 2 Chat👩‍⚕️👨‍⚕️")
                 with gr.Row():
                     gr.Image(value="./Frontend/assets/LogoP1.png", height=250, width=250, show_label=False, show_download_button=False, elem_id="icon")
                 gr.Markdown("## How should I talk to you?")
@@ -72,10 +73,10 @@ class ChatApp:
                 
                     # Create a button for each bot
                 bot_buttons = {}
-                for bot_name in bots:
-                    bot_buttons[bot_name] = gr.Button(bot_name)
+                for idx,bot_name in enumerate(bots):
+                    bot_buttons[bot_name] = gr.Button(bot_name, elem_id=f"topic-btn-{idx}")
 
-                back_button = gr.Button("Back to the other topics")
+                back_button = gr.Button("Back to the other topics🔙", elem_id=f"topic-btn-{idx+1}")
                 back_button.click(lambda: "page1", None, self.current_page)
                 # Create callbacks dynamically
                 for selected_name, btn in bot_buttons.items():

@@ -16,7 +16,7 @@ language_modes : {
 topics : [
     "Information on the Procedure 📄🧠",
     "Risks & Complications 🩺🏥",
-    "Concerns & Questions 🪽💭",
+    "Concerns & Questions 💭❔",
     "Checklist & Preparation 🧾✅",
     "Agenda of the Day 🗓️🕒",
     "Aftercare ❤️‍🩹"
@@ -34,7 +34,7 @@ topic_questions : {
         "How likely is it that I experience complications from sedation or tissue sampling?",
         "What should I do if I experience pain, bleeding, or unusual symptoms afterwards?"
     ],
-    "Concerns & Questions 🪽💭": [
+    "Concerns & Questions 💭❔": [
         "I’m anxious about the procedure.",
         "Will I be fully asleep, or can I still feel or remember parts of the exam?",
         "What happens if I react badly to the sedative or have trouble waking up?",
