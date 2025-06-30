@@ -45,7 +45,7 @@ This tool enhances patient understanding, supports shared decision-making, and s
 - Python 3.9+, pip, GPU (for faster inference).   (You don't need to have Python or pip for Docker)
 
 We provide two ways of installing doc 2 chat. 
-1.) Docker Image (recommended)
+1.) Docker (recommended)
 2.) Python 
 
 ### 1.) Docker
