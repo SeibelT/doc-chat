@@ -1,0 +1,149 @@
+# Sprachmodi
+#language_modes : {
+#    "special_needs": "simple",
+#    "average": "standard",
+#    "basic medical": "medical terminology"
+#}
+
+language_modes : {
+    "simple": "special_needs",
+    "standard": "average",
+    "medical terminology": "basic_medical"
+}
+
+
+# Themen
+topics : [
+    "Information on the Procedure 📄🧠",
+    "Risks & Complications 🩺🏥",
+    "Concerns & Questions 🪽💭",
+    "Checklist & Preparation 🧾✅",
+    "Agenda of the Day 🗓️🕒",
+    "Aftercare ❤️‍🩹"
+]
+
+# Fragen je Topic
+topic_questions : {
+    "Information on the Procedure 📄🧠": [
+        "What is an esophago-gastro-duodenoscopy and why is it being recommended?",
+        "How does the doctor perform the endoscopy and how long does it take?",
+        "Will I be under sedation or anesthesia, and how long does the procedure usually take?"
+    ],
+    "Risks & Complications 🩺🏥": [
+        "What are the general risks associated with an endoscopy?",
+        "How likely is it that I experience complications from sedation or tissue sampling?",
+        "What should I do if I experience pain, bleeding, or unusual symptoms afterwards?"
+    ],
+    "Concerns & Questions 🪽💭": [
+        "I’m anxious about the procedure.",
+        "Will I be fully asleep, or can I still feel or remember parts of the exam?",
+        "What happens if I react badly to the sedative or have trouble waking up?",
+        "What if I have questions the day before or the morning of the procedure—who should I contact?"
+    ],
+    "Checklist & Preparation 🧾✅": [
+        "What should I avoid eating or drinking before the procedure?",
+        "Do I need to stop or adjust any of my medications beforehand?",
+        "What documents or items do I need to bring with me on the day?"
+    ],
+    "Agenda of the Day 🗓️🕒": [
+        "How long will I be at the clinic on the day of the procedure?",
+        "What happens step-by-step from the time I arrive until I leave?",
+        "Will someone need to accompany me, and can I leave right after the procedure?"
+    ],
+    "Aftercare ❤️‍🩹": [
+        "What should I expect after the procedure—do I need to rest or take specific actions?",
+        "What signs or symptoms should make me call a doctor or seek emergency care?",
+        "When can I resume normal activities like driving, working, or exercising?"
+    ]
+}
+
+html_code : "<style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #FFFFFF;
+        }
+            #icon img {
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            border-radius: 0 !important;
+        }
+        .gradio-container {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(180, 220, 210, 0.10);
+        }
+        .heading h2 {
+            color: #4F8A8B;
+        }
+        #lang-button-0 {
+            background-color: #355C7D;
+            color: white;
+        }
+        #lang-button-1 {
+            background-color: #8B61C2;
+            color: white;
+        }
+        #lang-button-2 {
+            background-color: #6FEDB0;
+            color: white;
+        }
+        #topic-btn-0 { background-color: #B8FFF9; }
+        #topic-btn-1 { background-color: #FFF5BA; }
+        #topic-btn-2 { background-color: #FFD6E0; }
+        #topic-btn-3 { background-color: #D6F6FF; }
+        #topic-btn-4 { background-color: #FFEDDA; }
+        #topic-btn-5 { background-color: #D4F8E8; }
+
+        #topic-btn-0:hover,
+        #topic-btn-1:hover,
+        #topic-btn-2:hover,
+        #topic-btn-3:hover,
+        #topic-btn-4:hover,
+        #topic-btn-5:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 16px rgba(120,180,170,0.13);
+        }
+
+        .chat-window {
+            background-color: #FDFCFB;
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 4px 20px rgba(180,220,210,0.10);
+            min-height: 300px;
+        }
+
+        .message.user {
+            background-color: #B8FFF9;
+            color: #355C7D;
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin: 8px;
+            align-self: flex-end;
+            max-width: 75%;
+        }
+
+        .message.bot {
+            background-color: #E2F0CB;
+            color: #4F8A8B;
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin: 8px;
+            align-self: flex-start;
+            max-width: 75%;
+        }
+
+        textarea.chat-input, input.chat-input {
+            border-radius: 12px !important;
+            border: 1px solid #A3C9A8;
+            padding: 10px !important;
+            background-color: #FDFCFB;
+            color: #355C7D;
+        }
+
+        h2, h3 {
+            color: #4F8A8B;
+            font-weight: 700;
+        }
+    </style>"

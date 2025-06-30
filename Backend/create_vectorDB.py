@@ -1,16 +1,14 @@
+import warnings
+warnings.filterwarnings("ignore" )
 import os
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 
-from  utils import pdf_doccument_loader, create_vector_store
+from Backend.helpers import pdf_document_loader, create_vector_store
 
 from pathlib import Path
-
-ROOT_DIR = Path(__file__).resolve().parents[2]
-DATA_DIR = os.path.join(ROOT_DIR, "data")
-INDEX_DIR = "faiss_index"
 
 
 
@@ -20,7 +18,7 @@ def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=1000, chunk_over
     all_docs = []
     for file in os.listdir(pdf_dir):
         if file.endswith(".pdf"):
-            docs = pdf_doccument_loader(pdf_dir, file)
+            docs = pdf_document_loader(pdf_dir, file)
             print("Succesfully loaded pdf doccument")
             all_docs.extend(docs)
     print(f"Loaded available pdf documents")
@@ -43,8 +41,13 @@ def create_vectorstore_from_pdfs(pdf_dir, index_dir, chunk_size=1000, chunk_over
         vector_store.save_local(index_dir)
         print(f"Vector store saved to: {index_dir}")
 
+if __name__ == "__main__":
+    
+    ROOT_DIR = Path(__file__).resolve().parents[2]
+    DATA_DIR = os.path.join(ROOT_DIR, "data")
+    INDEX_DIR = "faiss_index"
 
-create_vectorstore_from_pdfs(str(DATA_DIR), INDEX_DIR)
+    create_vectorstore_from_pdfs(str(DATA_DIR), INDEX_DIR)
 
 
 

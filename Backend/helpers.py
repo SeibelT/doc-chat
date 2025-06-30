@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore" )
 import os
 import faiss
 
@@ -7,9 +9,9 @@ from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from transformers import pipeline
+import subprocess
 
-
-def pdf_doccument_loader(pdf_dir, file):
+def pdf_document_loader(pdf_dir, file):
     doccument_loader = PDFPlumberLoader(os.path.join(pdf_dir, file))
     return doccument_loader.load()
 
@@ -59,3 +61,10 @@ def reranking_model(model_name="BAAI/bge-reranker-large", top_k=5):
 
 
 
+def is_model_available(model_name):
+    result = subprocess.run(["ollama", "list"], capture_output=True, text=True)
+    return model_name in result.stdout
+
+def pull_model(model_name):
+    print(f"Pulling model '{model_name}'...")
+    subprocess.run(["ollama", "pull", model_name])
