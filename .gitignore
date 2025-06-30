@@ -8,3 +8,4 @@ __pycache__/
 */__pycache__
 test.py 
 test.ipynb
+meta_data/output/*

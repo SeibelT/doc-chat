@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore" )
 import os
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter

@@ -1,3 +1,5 @@
+import warnings
+#warnings.filterwarnings("ignore" )
 import os
 from pathlib import Path
 import time
@@ -13,33 +15,47 @@ from langchain.embeddings import HuggingFaceEmbeddings
 # Import from your existing scripts
 #from utils import embedding_model
 from langchain_community.vectorstores import FAISS
-
+from langchain_core.messages import HumanMessage, AIMessage
+# to sroye messages
+from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.messages import BaseMessage, messages_from_dict, messages_to_dict
+from langchain_core.messages import HumanMessage, AIMessage
+import json
+import os
 
 def embedding_model(model_name="BAAI/bge-large-en-v1.5"):
-
     return HuggingFaceEmbeddings(model_name=model_name)
 
 
 
 class dummy_model:
-    def __init__(self):
+    def __init__(self, history_file="./meta_data/output/chat_history.json"):
         self.language_level_prompt = "default"
-    def single_question(self,message):
-        return message + "  " + self.language_level_prompt
-    def set_language_prompt(self,language):
-        self.language_level_prompt = f"new language = {language}"
+        self.chat_history = FileChatMessageHistory(file_path=history_file)
+
+    def single_question(self, message):
+        answer = f"You asked: {message}\n set language = {self.language_level_prompt}\n My answer: Honestly, I do not know the answer. I am just a dummy model."
+
+        self.chat_history.add_message(HumanMessage(content=message))
+        self.chat_history.add_message(AIMessage(content=answer))
+        return answer
+
+    def set_language_prompt(self, language):
+        self.language_level_prompt = language
+
 
 
 class Ollama_RAG:
     """Class for RAG with Ollama and FAISS"""
     
-    def __init__(self,language_level,prompt_dict,rag_dir,model_name,logger):
+    def __init__(self,language_level,prompt_dict,rag_dir,model_name,logger, history_file="./meta_data/output/chat_history.json"):
         self.index_name = "index"
         
         self.prompt_dict = prompt_dict
         self.language_level_prompt= self.set_language_prompt(language_level)
         # Chat history will be stored as a global variable
-        self.chat_history = ChatMessageHistory()
+        self.chat_history = FileChatMessageHistory(file_path=history_file)
+        #self.chat_history = ChatMessageHistory()
 
         # Single template with system_message as a variable
         self.RAG_PROMPT_TEMPLATE = """
@@ -123,10 +139,10 @@ class Ollama_RAG:
         
 
         # Add user query and AI response to History 
-        self.chat_history.add_user_message(user_input)
-        self.chat_history.add_ai_message(full_answer)
-        #if self.store_all: 
-        #    ...
+        self.chat_history.add_message(HumanMessage(content=user_input))
+        self.chat_history.add_message(AIMessage(content=full_answer,additional_kwargs={"retrieved_context": context}))
+
+ 
         return full_answer
         
     
@@ -153,3 +169,28 @@ class Ollama_RAG:
         return formatted_history
 
     
+
+class FileChatMessageHistory(BaseChatMessageHistory):
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self._load_messages()
+
+    def _load_messages(self):
+        try:
+            with open(self.file_path, 'r') as f:
+                data = json.load(f)
+                self.messages = messages_from_dict(data)
+        except (FileNotFoundError, json.JSONDecodeError):
+            self.messages = []
+
+    def _save_messages(self):
+        with open(self.file_path, 'w') as f:
+            json.dump(messages_to_dict(self.messages), f, indent=2)
+
+    def add_message(self, message: BaseMessage) -> None:
+        self.messages.append(message)
+        self._save_messages()
+
+    def clear(self) -> None:
+        self.messages = []
+        self._save_messages()

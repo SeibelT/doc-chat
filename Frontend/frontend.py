@@ -8,7 +8,7 @@ class ChatApp:
             frontend_text = yaml.safe_load(file)
 
         self.language_modes = frontend_text["language_modes"]
-        self.topics =frontend_text["topics"]
+        self.topics = list(frontend_text["topic_questions"].keys()) 
         self.topic_questions =frontend_text["topic_questions"]
         self.html_code =frontend_text["html_code"]
         self.language_mode = gr.State("standard")

@@ -8,7 +8,7 @@
 language_modes : {
     "simple": "special_needs",
     "standard": "average",
-    "medical terminology": "basic medical"
+    "medical terminology": "basic_medical"
 }
 
 
