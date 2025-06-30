@@ -53,22 +53,53 @@ git clone https://github.com/username/repository-name.git
 cd repository-name
 
 # Create virtual environment with venv 
-pip install -m venv .env
+pip install venv
+
 python -m venv .venv
 
 # Activate Virtual Environment
 pip source ./.env/bin/activate
 
-
-
 # Run code (with activated virtual environment)
+
+```bash
+# Basic usage with default options
 python ./run_chatbot.py
+
+# Specify model (choose between "mistral" or "dummy")
+python ./run_chatbot.py --model mistral
+python ./run_chatbot.py --model dummy
+
+# Disable checking for missing packages
+python ./run_chatbot.py --check_missing False
+
+# Combine options
+python ./run_chatbot.py --model dummy --check_missing False
 ```
-### Example Output
+
+**Options:**
+- `--model`: Selects the model to use (`mistral` or `dummy`). Default: `mistral`.
+     The dummy model allows you to check the UI without having to download the mistral model.
+- `--check_missing`: Enable or disable checking for missing packages. Accepts `True` or `False`. Default: `True`.
+
+
+### Trivia
+
+1.) **Initial Setup Time:** Installing all required libraries and downloading the local Mistral 7B model typically takes about 5–10 minutes.
+
+2.) **GPU Detection:** Ollama automatically detects available GPUs. Without a GPU, response times may exceed 2 minutes. With a GPU (e.g., Quadro RTX 6000), responses are typically returned in 2–6 seconds.
+
+3.) The chat history is automatically saved in the [output folder](./meta_data/output/). With the use of the [PDF Creater](./Output_Creator/Create_pdf.ipynb) the output .yaml will be transformed into a better readable .pdf file 
+
+4.)
+
+
+
+## Example Output
 Provide a brief description or screenshots of expected outputs (if applicable).
 
 
-### Future Implementation 
+## Future Implementation 
 * History based Retriever 
 * 
 ## Citation

@@ -17,7 +17,7 @@ import logging
 import argparse
 
 
-logging.basicConfig( #"./meta_data/output/debug_log.txt"
+logging.basicConfig(
     filename="./meta_data/output/debug_log.log",
     filemode='a',  # append mode
     format='%(asctime)s - %(levelname)s - %(message)s',
