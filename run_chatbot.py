@@ -98,11 +98,12 @@ if __name__ == "__main__":
 
     if check_missing: 
 
-        if is_model_available(model_name) & (not is_dummy):
-            print(f"Model '{model_name}' is available locally.")
-        elif not is_dummy:
-            print(f"Model '{model_name}' is not available locally.")
-            pull_model(model_name)
+        if not is_dummy:
+            if is_model_available(model_name):
+                print(f"Model '{model_name}' is available locally.")
+            else:
+                print(f"Model '{model_name}' is not available locally.")
+                pull_model(model_name)
 
         # Step 3: Check if VectorDB is created else create from documents in data directory
         if not os.path.exists("meta_data/faiss_index"):
