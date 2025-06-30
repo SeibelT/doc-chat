@@ -39,14 +39,65 @@ This tool enhances patient understanding, supports shared decision-making, and s
 ## Installation & Usage 
 
 **Prerequisites**:
-- Python 3.9+, pip, GPU (for faster inference).
+
+- At least 8GB RAM and 10GB free disk space
+- Stable internet connection — downloading the language model can take a while!
+- Python 3.9+, pip, GPU (for faster inference).   (You don't need to have Python or pip for Docker)
 
 We provide two ways of installing doc 2 chat. 
 1.) Docker Image (recommended)
 2.) Python 
 
 ### 1.) Docker
-<<== TODO:Insert docker documentations here!   ==>>
+Prerequisites:
+
+- Docker installed on your system
+
+**Installation Steps**:
+
+Install Docker (if not already installed):
+
+- Windows/Mac: Download Docker Desktop from https://www.docker.com/products/docker-desktop/
+- Linux: Follow the official guide at https://docs.docker.com/engine/install/
+
+
+**Clone the repository**:
+```bash
+git clone https://github.com/username/repository-name.git
+cd repository-name
+```
+**Docker Usage Options**:
+```bash
+# Run the application
+docker compose up  
+
+# (That's it! Wait for everything to download and you are ready to use the App!)
+
+# Stop the application
+docker compose down
+```
+**Docker Management**:
+```bash
+# List all running containers
+docker ps
+
+# List all containers (even stopped ones)
+docker ps -a
+
+# List all Docker images
+docker images
+
+# Remove stopped containers
+docker container prune
+
+# Remove unused images
+docker image prune
+
+# OR remove a specific container/image by name or ID
+docker rm <container_id_or_name>
+docker rmi <image_id_or_name>
+```
+**Pruning and removing images/containers will permanently delete them from your system.**
 ### 2.) Python
 
 **Steps**:
