@@ -76,7 +76,7 @@ def str2bool(v):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Web-App for doc2chat ")
-    parser.add_argument("--model", type=str, required=False,default="mistral", help="Path to the configuration file.",choices=["mistral","dummy"])
+    parser.add_argument("--model", type=str, required=False,default="mistral", help="Path to the configuration file.",choices=["mistral","dummy","gpt-oss"])
     parser.add_argument('--check_missing', type = str2bool,required = False, default=True, help="check for missing packages etc. ")
     args = parser.parse_args()
 

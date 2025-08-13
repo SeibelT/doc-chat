@@ -41,7 +41,8 @@ class dummy_model:
         return answer
 
     def set_language_prompt(self, language):
-        self.chat_history.add_message(SystemMessage(content=f"Language prompt set to: {language}"))
+        self.chat_history.messages = [ m for m in self.chat_history.messages if m.type != "system"]
+        self.chat_history.add_message(SystemMessage(content=f"{language}"))
         self.language_level_prompt = language
 
 
@@ -112,8 +113,9 @@ class Ollama_RAG:
         
         self.logger.info("Initialization complete! Ready for chat.")
     def set_language_prompt(self,language_level):
-        self.chat_history.add_message(SystemMessage(content=f"Language prompt set to: {language_level}"))
-        return self.prompt_dict[language_level]
+        self.chat_history.messages = [ m for m in self.chat_history.messages if m.type != "system"]
+        self.chat_history.add_message(SystemMessage(content=f"{self.prompt_dict[language_level]}"))
+        self.language_level_prompt = language_level
 
     def single_question(self,user_input):
         
