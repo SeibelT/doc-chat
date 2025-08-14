@@ -24,6 +24,7 @@ services:
       - ./data:/app/data
       - ./meta_data/faiss_index:/app/meta_data/faiss_index
       - ./meta_data/output:/app/meta_data/output
+      - /home/abdallah/doc-chat/doc-chat:/app
     environment:
       - OLLAMA_HOST=http://ollama:11434
       - GRADIO_SERVER_NAME=0.0.0.0
