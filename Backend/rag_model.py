@@ -67,8 +67,8 @@ class Ollama_RAG:
         # INSTRUCTIONS:
         {language_level_prompt}
         Answer the current question using the context provided and considering the previous conversation if relevant. 
-        If the context doesn't contain the answer, say 'I do not have enough information to answer that question based on the provided context.'
-
+        If the question is medical and the context doesn't contain the answer, say 'I do not have enough information to answer that question based on the provided context.'
+        
         # HISTORY:
         {chat_history}
 
@@ -118,9 +118,19 @@ class Ollama_RAG:
         self.language_level_prompt = language_level
 
     def single_question(self,user_input):
-        
+        history_turns = 4
+        recent_history = self.chat_history.messages[-history_turns:]  
+        history_text = " ".join(
+            [msg.content for msg in recent_history if msg.type!="system"]
+        )
+
+        # Merge last N turns with current user input
+        retrieval_query = f"{history_text}\nUser now says: {user_input}"
+
+        # Retrieve documents using the merged query
+        retrieved_docs = self.retriever.invoke(retrieval_query)
         # Retrieve documents using the already initialized retriever
-        retrieved_docs = self.retriever.invoke(user_input)
+        #retrieved_docs = self.retriever.invoke(user_input)
         
         # Prepare inputs
         context = self.format_docs(retrieved_docs)
