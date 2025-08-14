@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import time
 import sys
+import socket
 from langchain_community.llms import Ollama
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
@@ -22,6 +23,40 @@ from langchain_core.messages import BaseMessage, messages_from_dict, messages_to
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 import json
 import os
+
+
+def detect_ollama_setup():
+    """
+    Detect if we're running in Docker or local environment
+    Returns the appropriate Ollama configuration
+    """
+    # Method 1: Check for OLLAMA_HOST environment variable (Docker)
+    if os.getenv('OLLAMA_HOST'):
+        return os.getenv('OLLAMA_HOST')
+    
+    # Method 2: Check if we're inside a Docker container
+    if os.path.exists('/.dockerenv'):
+        # We're in Docker, but no OLLAMA_HOST set - use Docker networking
+        return 'http://ollama:11434'
+    
+    # Method 3: Check if running in Docker by checking hostname
+    hostname = socket.gethostname()
+    if len(hostname) == 12 and all(c in '0123456789abcdef' for c in hostname):
+        # Hostname looks like a Docker container ID
+        return 'http://ollama:11434'
+    
+    # Method 4: Try to connect to Docker Ollama first, fallback to local
+    try:
+        import requests
+        response = requests.get('http://ollama:11434/api/tags', timeout=2)
+        if response.status_code == 200:
+            return 'http://ollama:11434'
+    except:
+        pass
+    
+    # Default: Local setup (venv)
+    return None
+
 
 def embedding_model(model_name="BAAI/bge-large-en-v1.5"):
     return HuggingFaceEmbeddings(model_name=model_name)
@@ -93,7 +128,15 @@ class Ollama_RAG:
 
         # Initialize resources ONCE outside the loop
         self.logger.info("Initializing models and vector store...")
-        self.llm = Ollama(model=model_name, temperature=0.1,)
+        # Auto-detect environment and configure Ollama
+        ollama_base_url = detect_ollama_setup()
+        
+        if ollama_base_url:
+            print(f"Docker environment detected, using Ollama at: {ollama_base_url}")
+            self.llm = Ollama(model=model_name, base_url=ollama_base_url, temperature=0.1)
+        else:
+            print(f"Local environment detected, using default Ollama")
+            self.llm = Ollama(model=model_name, temperature=0.1)
         embed_model = embedding_model()
         
         vector_store = FAISS.load_local(
